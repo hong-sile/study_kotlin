@@ -43,7 +43,7 @@ class ExpressionTest {
         val expected = 55
         var sum = 0
         for (i in 1..10) {
-            sum +=i
+            sum += i
         }
         assertThat(sum)
             .isEqualTo(expected)
@@ -54,7 +54,7 @@ class ExpressionTest {
         val expected = 25
         var sum = 0
         for (i in 1..10 step 2) {
-            sum +=i
+            sum += i
         }
         assertThat(sum)
             .isEqualTo(expected)
@@ -65,7 +65,7 @@ class ExpressionTest {
         val expected = 55
         var sum = 0
         for (i in 10 downTo 1) {
-            sum +=i
+            sum += i
         }
         assertThat(sum)
             .isEqualTo(expected)
@@ -76,7 +76,7 @@ class ExpressionTest {
         val expected = 30
         var sum = 0
         for (i in 10 downTo 1 step 2) {
-            sum +=i
+            sum += i
         }
         assertThat(sum)
             .isEqualTo(expected)
@@ -87,8 +87,8 @@ class ExpressionTest {
     fun forLoopWithList() {
         val expected = 15
         var sum = 0
-        for (i in listOf(1,1,1,1,1,1).indices) {
-            sum +=i
+        for (i in listOf(1, 1, 1, 1, 1, 1).indices) {
+            sum += i
         }
         assertThat(sum)
             .isEqualTo(expected)
