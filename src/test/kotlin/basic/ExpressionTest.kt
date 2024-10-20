@@ -1,6 +1,7 @@
 package basic
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import kotlin.test.Test
@@ -105,5 +106,63 @@ class ExpressionTest {
     private fun sum(numbers: List<Int>): Int {
         return numbers.stream()
             .reduce(0) { x, y -> x + y }
+    }
+
+    @Test
+    fun testInlineFunction() {
+        val result = inlineFunc("10") { str ->
+            str.toInt()
+        }
+
+        assertThat(result)
+            .isEqualTo(10)
+    }
+
+    inline fun inlineFunc(numberString: String, lambdaFunc: (String) -> Int): Int {
+        return lambdaFunc(numberString)
+    }
+
+    @Test
+    fun infixAnd() {
+        val a = 15
+        val b = 12
+        val c = 11
+
+        val result1 = (a > b).and(a > c)
+        val result2 = (a > b) and (a > c)
+
+        assertAll(
+            { assertThat(result1).isTrue() },
+            { assertThat(result2).isTrue() }
+        )
+    }
+
+    @Test
+    fun infixShr() {
+        val a = 8
+
+        val result1 = a shr 2
+        val result2 = a.shr(1)
+
+        assertAll(
+            { assertThat(result1).isEqualTo(2) },
+            { assertThat(result2).isEqualTo(4) }
+        )
+    }
+
+    @Test
+    fun testUserInfix() {
+        val userInFix = UserInFix()
+
+        val result = userInFix.square(10)
+
+        assertThat(result)
+            .isEqualTo(100)
+    }
+
+    class UserInFix {
+        infix fun square(a: Int): Int {
+            return a * a
+        }
     }
 }

@@ -49,8 +49,8 @@ class DataTypeTest {
     }
 
     @Test
-    fun lambdaClassExtension(){
-        val append : String.(Int) -> String = { this + it }
+    fun lambdaClassExtension() {
+        val append: String.(Int) -> String = { this + it }
 
         val actual = "Test".append(50)
         val expected = "Test50"
@@ -58,4 +58,18 @@ class DataTypeTest {
         assertThat(actual)
             .isEqualTo(expected)
     }
+
+    @Test
+    fun testClassObj() {
+        val testPerson = TestPerson("hong-sile", 25)
+        val testPerson2 = TestPerson("hong-sile", 25)
+
+        assertThat(testPerson)
+            .usingRecursiveComparison()
+            .isEqualTo(testPerson2)
+    }
+}
+
+class TestPerson(private val name: String, private val age: Int) {
+
 }
