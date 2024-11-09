@@ -51,4 +51,30 @@ class ApplyServiceTest {
         val couponCount = couponRepository.count()
         assertThat(couponCount).isEqualTo(100)
     }
+
+    @Test
+    fun 한명이_1000번_발급시도() {
+        val threadCount = 1000
+        val executors = Executors.newFixedThreadPool(32)
+        // 다른 스레드가 해당 값을 감소시킬 수 있도록 함
+        val countDownLatch = CountDownLatch(threadCount)
+
+        for (i in 1L..threadCount) {
+            executors.submit {
+                try {
+                    applyService.apply(userId = 1L)
+                }finally {
+                    countDownLatch.countDown()
+                }
+            }
+        }
+
+        //countdownlatch가 0이 될 떄까지 메인스레드는 대기한다.
+        countDownLatch.await()
+
+        Thread.sleep(10000)
+
+        val couponCount = couponRepository.count()
+        assertThat(couponCount).isEqualTo(1)
+    }
 }
