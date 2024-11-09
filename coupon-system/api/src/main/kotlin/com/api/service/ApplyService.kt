@@ -1,8 +1,7 @@
 package com.api.service
 
-import com.api.domain.Coupon
+import com.api.producer.CouponCreateProducer
 import com.api.repository.CouponCountRepository
-import com.api.repository.CouponRepository
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -12,8 +11,8 @@ private const val COUPON_MAX_COUNT = 100
 @Service
 @RequiredArgsConstructor
 class ApplyService(
-    private val couponRepository: CouponRepository,
-    private val couponCountRepository: CouponCountRepository
+    private val couponCountRepository: CouponCountRepository,
+    private val couponCreateProducer: CouponCreateProducer
 ) {
     @Transactional
     fun apply(userId: Long) {
@@ -21,6 +20,6 @@ class ApplyService(
         if (count > COUPON_MAX_COUNT) {
             return
         }
-        couponRepository.save(Coupon(userId = userId))
+        couponCreateProducer.create(userId)
     }
 }
