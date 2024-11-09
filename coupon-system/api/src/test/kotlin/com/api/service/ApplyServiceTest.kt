@@ -46,6 +46,8 @@ class ApplyServiceTest {
         //countdownlatch가 0이 될 떄까지 메인스레드는 대기한다.
         countDownLatch.await()
 
+        Thread.sleep(10000)
+
         val couponCount = couponRepository.count()
         assertThat(couponCount).isEqualTo(100)
     }
