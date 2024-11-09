@@ -1,4 +1,4 @@
-package basic
+package kopring_basic.basic
 
 import org.assertj.core.api.Assertions.assertThat
 import kotlin.test.Test
